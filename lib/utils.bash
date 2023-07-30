@@ -39,32 +39,31 @@ download_release() {
 	version="$1"
 	filename="$2"
 
-
 	case "$(uname -s)" in
-  	"Darwin")
-    	case "$(uname -m)" in
-      	"arm64")
-					url="$GH_REPO/releases/download/v${version}/kclvm-v${version}-darwin-arm64.tar.gz"
-        	;;
-      	"x86_64")
-					url="$GH_REPO/releases/download/v${version}/kclvm-v${version}-darwin-amd64.tar.gz"
-        	;;
-    	esac
-    	;;
-  	"Linux")
-    	case "$(uname -m)" in
-      	"armv7l")
-      		fail "armv7l not supported"
-        	;;
-      	"x86_64")
-					url="$GH_REPO/releases/download/v${version}/kclvm-v${version}-linux-amd64.tar.gz"
-					# https://github.com/kcl-lang/kcl/releases/download/v0.5.1/kclvm-v0.5.1-linux-amd64.tar.gz
-        	;;
-      	"aarch64")
-      		fail "aarch64 not supported"
-        	;;
-    	esac
-    	;;
+	"Darwin")
+		case "$(uname -m)" in
+		"arm64")
+			url="$GH_REPO/releases/download/v${version}/kclvm-v${version}-darwin-arm64.tar.gz"
+			;;
+		"x86_64")
+			url="$GH_REPO/releases/download/v${version}/kclvm-v${version}-darwin-amd64.tar.gz"
+			;;
+		esac
+		;;
+	"Linux")
+		case "$(uname -m)" in
+		"armv7l")
+			fail "armv7l not supported"
+			;;
+		"x86_64")
+			url="$GH_REPO/releases/download/v${version}/kclvm-v${version}-linux-amd64.tar.gz"
+			# https://github.com/kcl-lang/kcl/releases/download/v0.5.1/kclvm-v0.5.1-linux-amd64.tar.gz
+			;;
+		"aarch64")
+			fail "aarch64 not supported"
+			;;
+		esac
+		;;
 	esac
 
 	echo "* Downloading $TOOL_NAME release $version..."

@@ -57,7 +57,6 @@ download_release() {
 			;;
 		"x86_64")
 			url="$GH_REPO/releases/download/v${version}/kclvm-v${version}-linux-amd64.tar.gz"
-			# https://github.com/kcl-lang/kcl/releases/download/v0.5.1/kclvm-v0.5.1-linux-amd64.tar.gz
 			;;
 		"aarch64")
 			fail "aarch64 not supported"

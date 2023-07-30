@@ -8,6 +8,8 @@
 
 # Contents
 
+- [asdf-kcl  ](#asdf-kcl--)
+- [Contents](#contents)
 - [Dependencies](#dependencies)
 - [Install](#install)
 - [Contributing](#contributing)
@@ -15,10 +17,15 @@
 
 # Dependencies
 
-**TODO: adapt this section**
-
 - `bash`, `curl`, `tar`: generic POSIX utilities.
-- `SOME_ENV_VAR`: set this environment variable in your shell config to load the correct version of tool x.
+
+
+You also need compatible hardware/OS:
+- Linux
+  - amd64
+- OSX/Darwin
+  - amd64
+  - arm64
 
 # Install
 
@@ -53,7 +60,9 @@ install & manage versions.
 
 Contributions of any kind welcome! See the [contributing guide](contributing.md).
 
-[Thanks goes to these contributors](https://github.com/starkers/asdf-kcl/graphs/contributors)!
+Credits for the amazing kcl-lang to:
+
+[KCL contributors](https://github.com/kcl-lang/kcl/graphs/contributors)
 
 # License
 

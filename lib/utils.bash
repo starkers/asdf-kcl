@@ -74,7 +74,7 @@ download_release() {
 install_version() {
 	local install_type="$1"
 	local version="$2"
-	local install_path="${3%/bin}/bin"
+	local install_path="$3/bin"
 
 	if [ "$install_type" != "version" ]; then
 		fail "asdf-$TOOL_NAME supports release installs only"
@@ -82,11 +82,12 @@ install_version() {
 
 	(
 		mkdir -p "$install_path"
-		cp -r "$ASDF_DOWNLOAD_PATH"/* "$install_path"
+		cp -r "${ASDF_DOWNLOAD_PATH}"/bin/kcl "${install_path}"
+		cd "${install_path}"
 
-		# TODO: Assert kcl executable exists.
 		local tool_cmd
-		tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f2)"
+		tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"
+		set -x
 		test -x "$install_path/$tool_cmd" || fail "Expected $install_path/$tool_cmd to be executable."
 
 		echo "$TOOL_NAME $version installation was successful!"

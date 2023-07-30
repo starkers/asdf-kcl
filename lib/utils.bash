@@ -83,6 +83,7 @@ install_version() {
 	(
 		mkdir -p "$install_path"
 		cp -r "${ASDF_DOWNLOAD_PATH}"/bin/kcl "${install_path}"
+		cp -r "${ASDF_DOWNLOAD_PATH}"/bin/kcl-* "${install_path}"
 		cd "${install_path}"
 
 		local tool_cmd

@@ -2,7 +2,6 @@
 
 set -euo pipefail
 
-# TODO: Ensure this is the correct GitHub homepage where releases can be downloaded for kcl.
 GH_REPO="https://github.com/kcl-lang/kcl"
 TOOL_NAME="kcl"
 TOOL_TEST="kcl --version"
@@ -14,7 +13,6 @@ fail() {
 
 curl_opts=(-fsSL)
 
-# NOTE: You might want to remove this if kcl is not hosted on GitHub releases.
 if [ -n "${GITHUB_API_TOKEN:-}" ]; then
 	curl_opts=("${curl_opts[@]}" -H "Authorization: token $GITHUB_API_TOKEN")
 fi
@@ -41,8 +39,33 @@ download_release() {
 	version="$1"
 	filename="$2"
 
-	# TODO: Adapt the release URL convention for kcl
-	url="$GH_REPO/archive/v${version}.tar.gz"
+
+	case "$(uname -s)" in
+  	"Darwin")
+    	case "$(uname -m)" in
+      	"arm64")
+					url="$GH_REPO/releases/download/v${version}/kclvm-v${version}-darwin-arm64.tar.gz"
+        	;;
+      	"x86_64")
+					url="$GH_REPO/releases/download/v${version}/kclvm-v${version}-darwin-amd64.tar.gz"
+        	;;
+    	esac
+    	;;
+  	"Linux")
+    	case "$(uname -m)" in
+      	"armv7l")
+      		fail "armv7l not supported"
+        	;;
+      	"x86_64")
+					url="$GH_REPO/releases/download/v${version}/kclvm-v${version}-linux-amd64.tar.gz"
+					# https://github.com/kcl-lang/kcl/releases/download/v0.5.1/kclvm-v0.5.1-linux-amd64.tar.gz
+        	;;
+      	"aarch64")
+      		fail "aarch64 not supported"
+        	;;
+    	esac
+    	;;
+	esac
 
 	echo "* Downloading $TOOL_NAME release $version..."
 	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
@@ -63,7 +86,7 @@ install_version() {
 
 		# TODO: Assert kcl executable exists.
 		local tool_cmd
-		tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"
+		tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f2)"
 		test -x "$install_path/$tool_cmd" || fail "Expected $install_path/$tool_cmd to be executable."
 
 		echo "$TOOL_NAME $version installation was successful!"
